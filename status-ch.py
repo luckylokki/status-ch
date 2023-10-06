@@ -12,7 +12,7 @@ config.read('config.ini')
 name = config['agent-config']['name']
 webhook_url = config['slack']['url'] + config['slack']['token']
 log_dir = config['agent-config']['log_pwd']
-log_name = log_dir + 'status-ch' + datetime.today().strftime('%d-%m-%Y') + '.log'
+log_name = log_dir + 'status-ch/' + datetime.today().strftime('%d-%m-%Y') + '.log'
 service_list = []
 
 
@@ -76,15 +76,17 @@ while True:
         if check[1] == False:
             date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             data = str([date_now, name, check[0]])
-            print(f'[!] {date_now_log()} Service {name} stopped')
-            log_write(log_name, str(f'[!] {date_now_log()} Send {data}\n'))
-            slack_notification(f'{name}', f'{date_now_log()} Service {check[0]} stopped', '#e01e5a')
+            print(f'[!] {date_now_log()} Service {check[0]} stopped or not exist, check it!')
+            log_write(log_name, str(f'[!] {date_now_log()} Service {check[0]} stopped or not exist, check it!\n'))
+            slack_notification(f'{name}', f'{date_now_log()} Service {check[0]} stopped or not exist, check it!', '#e01e5a')
 
     cpu_p = cpu_perc()
     vmem_p = vmem_perc()
     if int(cpu_p) > 80:
         slack_notification(f'{name}', f'{date_now_log()} CPU is over 80% load! {cpu_p}', '#e01e5a')
+        log_write(log_name, str(f'[!] {date_now_log()} Server {name} CPU is over 80% load! {cpu_p}\n'))
 
     if int(vmem_p) > 70:
         slack_notification(f'{name}', f'{date_now_log()} RAM is over 70% load! {vmem_p}', '#e01e5a')
+        log_write(log_name, str(f'[!] {date_now_log()} Server {name} RAM is over 70% load! {vmem_p}\n'))
     time.sleep(15)
