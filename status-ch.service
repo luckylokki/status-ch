@@ -1,0 +1,13 @@
+[Unit]
+Description=status-ch
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/etc/status-ch
+ExecStart=/etc/status-ch/venv/bin/python3 status-ch.py
+TimeoutSec=30
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
