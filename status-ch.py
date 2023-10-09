@@ -13,6 +13,7 @@ name = config['agent-config']['name']
 webhook_url = config['slack']['url'] + config['slack']['token']
 log_dir = config['agent-config']['log_pwd']
 log_name = log_dir + 'status-ch/' + datetime.today().strftime('%d-%m-%Y') + '.log'
+pm2_status = config['PM2']['pm2_service']
 service_list = []
 
 
@@ -90,3 +91,15 @@ while True:
         slack_notification(f'{name}', f'{date_now_log()} RAM is over 70% load! {vmem_p}', '#e01e5a')
         log_write(log_name, str(f'[!] {date_now_log()} Server {name} RAM is over 70% load! {vmem_p}\n'))
     time.sleep(15)
+    #PM2 status check
+    if pm2_status == 'On':
+        try:
+            with open('l1', 'r') as log:
+                data = json.load(log)
+                print(type(data))
+            for i in range(len(data)):
+                if data[i]["pm2_env"]["status"] != 'online':
+                    slack_notification(f'{name}', f'{date_now_log()} PM2 ID: {data[i]["pm2_env"]["pm_id"]}, name: {data[i]["name"]}, status: {data[i]["pm2_env"]["status"]}')
+        except:
+            print("PM2 Unknown Error")
+            log_write(log_name, str(f'[!] {date_now_log()} Server {name} PM2 Unknown Error\n'))
