@@ -71,7 +71,7 @@ def check_cpu_ram():
         slack_notification(f'{name}', f'{date_now_log()} {vmem_p}% of RAM used is over 80% load!', '#e01e5a')
         log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {vmem_p}% of RAM used is over 80% load!\n'))
 
-    if int(disk_p) > 10:
+    if int(disk_p) > 80:
         slack_notification(f'{name}', f'{date_now_log()} {disk_p}% of DISK space used is over 80% load!', '#e01e5a')
         log_write(log_name,
                   str(f'[!] {date_now_log()} Server {name}: {disk_p}% of DISK space used is over 80% load!\n'))
