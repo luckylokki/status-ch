@@ -1,11 +1,13 @@
 import configparser
 from modules import MyService
 import time
+import subprocess
 import urllib3
 import json
 import traceback
 import psutil
 from datetime import datetime
+import os
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -94,6 +96,9 @@ while True:
     #PM2 status check
     if pm2_status == 'On':
         try:
+            if os.path.isfile('/etc/status-ch/l1'):
+                subprocess.call("sudo rm -f /etc/status-ch/l1", shell=True)
+            subprocess.call('pm2 jlist > l1', shell = True)
             with open('l1', 'r') as log:
                 data = json.load(log)
                 print(type(data))
