@@ -86,13 +86,18 @@ while True:
         if os.path.isfile('/etc/status-ch/l1'):
             subprocess.call("sudo rm -f /etc/status-ch/l1", shell=True)
         subprocess.call('pm2 jlist > l1', shell=True)
-        with open('l1', 'r') as log:
-            data = json.load(log)
-            print(type(data))
-        for i in range(len(data)):
-            if data[i]["pm2_env"]["status"] != 'online':
-                slack_notification(f'{name}',
-                                   f'{date_now_log()} PM2 ID: "{data[i]["pm2_env"]["pm_id"]}", name: "{data[i]["name"]}", status: "{data[i]["pm2_env"]["status"]}" stopped, check it!',
-                                   '#e01e5a')
+        try:
+            with open('l1', 'r') as log:
+                data = json.load(log)
+                print(type(data))
+            for i in range(len(data)):
+                if data[i]["pm2_env"]["status"] != 'online':
+                    slack_notification(f'{name}',
+                                       f'{date_now_log()} PM2 ID: "{data[i]["pm2_env"]["pm_id"]}", name: "{data[i]["name"]}", status: "{data[i]["pm2_env"]["status"]}" stopped, check it!',
+                                       '#e01e5a')
+        except:
+            slack_notification(f'{name}',
+                               f'{date_now_log()} Cant read "l1" file with pm2 statuses!',
+                               '#e01e5a')
     # sleep for 30sec
     time.sleep(stime)

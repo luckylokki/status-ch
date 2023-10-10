@@ -39,8 +39,8 @@ example: service_name_2 = MyService
 You need vopy "service_name" and change number this all.
 Services means that command will be look - systemctl status "YourService"
 
-After finish edit config.ini, you must run
+After finish edit config.ini, you must run(sudo mode)
 .. code-block::
-    python3 install.py
+    sudo python3 install.py
 
 That's create all folders,copy program to /etc/status-ch, create Daemon and run it.
