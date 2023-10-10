@@ -26,6 +26,10 @@ Edit config.ini:
     [slack]
     url = https://hooks.slack.com/services/
     token = YOUR_SLACK_TOKEN
+    [percents]#integer num % when bot must send notification if server uses more.
+    max_cpu = 80
+    max_vram = 80
+    max_disk = 80
 
 You can add services as much as you like, just add new:
 example: service_name_2 = MyService

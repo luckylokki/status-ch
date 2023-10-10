@@ -16,6 +16,9 @@ webhook_url = config['slack']['url'] + config['slack']['token']
 log_dir = config['agent-config']['log_pwd']
 log_name = log_dir + 'status-ch/' + datetime.today().strftime('%d-%m-%Y') + '.log'
 pm2_status = config['PM2']['pm2_service']
+max_cpu = int(config['percents']['max_cpu'])
+max_vram = int(config['percents']['max_vram'])
+max_disk = int(config['percents']['max_disk'])
 service_list = []
 
 
@@ -63,15 +66,15 @@ def check_cpu_ram():
     cpu_p = cpu_perc()
     vmem_p = vmem_perc()
     disk_p = disk_perc()
-    if int(cpu_p) > 80:
+    if int(cpu_p) > max_cpu:
         slack_notification(f'{name}', f'{date_now_log()} {cpu_p}% of CPU used is over 80% load!', '#e01e5a')
         log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {cpu_p}% of CPU used is over 80% load!\n'))
 
-    if int(vmem_p) > 80:
+    if int(vmem_p) > max_vram:
         slack_notification(f'{name}', f'{date_now_log()} {vmem_p}% of RAM used is over 80% load!', '#e01e5a')
         log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {vmem_p}% of RAM used is over 80% load!\n'))
 
-    if int(disk_p) > 80:
+    if int(disk_p) > max_disk:
         slack_notification(f'{name}', f'{date_now_log()} {disk_p}% of DISK space used is over 80% load!', '#e01e5a')
         log_write(log_name,
                   str(f'[!] {date_now_log()} Server {name}: {disk_p}% of DISK space used is over 80% load!\n'))
