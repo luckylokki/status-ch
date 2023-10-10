@@ -1,4 +1,3 @@
-import configparser
 from modules import MyService
 from modules.funcs import *
 import time
@@ -8,8 +7,6 @@ import json
 import traceback
 from datetime import datetime
 import os
-
-
 
 
 def log_write(file, data):
@@ -69,7 +66,8 @@ def check_cpu_ram():
         log_write(log_name,
                   str(f'[!] {date_now_log()} Server {name}: {disk_p}% of DISK space used is over 80% load!\n'))
 
-#main loop
+
+# main loop
 while True:
     service_list.clear()
     # CPU RAM DISK check
@@ -96,5 +94,5 @@ while True:
                 slack_notification(f'{name}',
                                    f'{date_now_log()} PM2 ID: "{data[i]["pm2_env"]["pm_id"]}", name: "{data[i]["name"]}", status: "{data[i]["pm2_env"]["status"]}" stopped, check it!',
                                    '#e01e5a')
-    #sleep for 30sec
+    # sleep for 30sec
     time.sleep(stime)
