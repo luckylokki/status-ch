@@ -30,6 +30,9 @@ Edit config.ini:
     max_cpu = 80
     max_vram = 80
     max_disk = 80
+    [sleeptime]
+    #Time in seconds, check every 30 sec by default
+    stime = 30
 
 You can add services as much as you like, just add new:
 example: service_name_2 = MyService

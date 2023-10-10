@@ -1,6 +1,6 @@
 import configparser
 from modules import MyService
-from modules.funcs import disk_perc, cpu_perc, vmem_perc, date_now_log
+from modules.funcs import *
 import time
 import subprocess
 import urllib3
@@ -9,17 +9,7 @@ import traceback
 from datetime import datetime
 import os
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-name = config['agent-config']['name']
-webhook_url = config['slack']['url'] + config['slack']['token']
-log_dir = config['agent-config']['log_pwd']
-log_name = log_dir + 'status-ch/' + datetime.today().strftime('%d-%m-%Y') + '.log'
-pm2_status = config['PM2']['pm2_service']
-max_cpu = int(config['percents']['max_cpu'])
-max_vram = int(config['percents']['max_vram'])
-max_disk = int(config['percents']['max_disk'])
-service_list = []
+
 
 
 def log_write(file, data):
@@ -107,4 +97,4 @@ while True:
                                    f'{date_now_log()} PM2 ID: "{data[i]["pm2_env"]["pm_id"]}", name: "{data[i]["name"]}", status: "{data[i]["pm2_env"]["status"]}" stopped, check it!',
                                    '#e01e5a')
     #sleep for 30sec
-    time.sleep(30)
+    time.sleep(stime)
