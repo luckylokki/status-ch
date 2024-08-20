@@ -13,7 +13,6 @@ Getting started
 Editing config file
 =====================
 Edit config.ini:
-
 .. code-block::
     [agent-config]
     name = NAME OF SERVER #It will be used for clask notification, for understanding which server
