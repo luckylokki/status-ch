@@ -9,7 +9,7 @@ import json
 config = configparser.ConfigParser()
 config.read('config.ini')
 name = config['agent-config']['name']
-webhook_url = config['slack']['url'] + config['slack']['token']
+webhook_url = config['slack']['url_hook_token']
 log_dir = config['agent-config']['log_pwd']
 log_name = log_dir + 'status-ch/' + datetime.today().strftime('%d-%m-%Y') + '.log'
 pm2_status = config['PM2']['pm2_service']
@@ -86,17 +86,17 @@ def check_cpu_ram():
     disk_p = disk_perc()
     if cpu_s == "On":
         if int(cpu_p) > max_cpu:
-            slack_notification(f'{name}', f'{date_now_log()} {cpu_p}% of CPU used is over 80% load!', '#e01e5a')
-            log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {cpu_p}% of CPU used is over 80% load!\n'))
+            slack_notification(f'{name}', f'{date_now_log()} {cpu_p}% of CPU used is over {max_cpu}% load!', '#e01e5a')
+            log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {cpu_p}% of CPU used is over {max_cpu}% load!\n'))
     if vram_s == "On":
         if int(vmem_p) > max_vram:
-            slack_notification(f'{name}', f'{date_now_log()} {vmem_p}% of RAM used is over 80% load!', '#e01e5a')
-            log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {vmem_p}% of RAM used is over 80% load!\n'))
+            slack_notification(f'{name}', f'{date_now_log()} {vmem_p}% of RAM used is over {max_vram}% load!', '#e01e5a')
+            log_write(log_name, str(f'[!] {date_now_log()} Server {name}: {vmem_p}% of RAM used is over {max_vram}% load!\n'))
     if disk_s == "On":
         if int(disk_p) > max_disk:
-            slack_notification(f'{name}', f'{date_now_log()} {disk_p}% of DISK space used is over 80% load!', '#e01e5a')
+            slack_notification(f'{name}', f'{date_now_log()} {disk_p}% of DISK space used is over {max_disk}% load!', '#e01e5a')
             log_write(log_name,
-                      str(f'[!] {date_now_log()} Server {name}: {disk_p}% of DISK space used is over 80% load!\n'))
+                      str(f'[!] {date_now_log()} Server {name}: {disk_p}% of DISK space used is over {max_disk}% load!\n'))
 
 
 if __name__ == "__main__":

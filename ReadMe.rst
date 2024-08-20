@@ -36,7 +36,7 @@ Edit config.ini:
 
 You can add services as much as you like, just add new:
 example: service_name_2 = MyService
-You need vopy "service_name" and change number this all.
+You need copy "service_name" and change number this all.
 Services means that command will be look - systemctl status "YourService"
 
 After finish edit config.ini, you must run(sudo mode)
@@ -44,3 +44,11 @@ After finish edit config.ini, you must run(sudo mode)
     sudo python3 install.py
 
 That's create all folders,copy program to /etc/status-ch, create Daemon and run it.
+
+Logs in /var/log/status-ch/ folder
+Installed app in /etc/status-ch/ folder
+You can control your app with this commands:
+service status-ch status
+service status-ch stop
+service status-ch start
+service status-ch restart
